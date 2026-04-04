@@ -5,6 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title data-i18n="page_title" data-i18n-mode="text">FCFC TP 研究報告 | Formosa Chemicals &amp; Fibre Corporation</title>
+<script>document.documentElement.classList.add("js-enabled");</script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <style>
@@ -72,6 +73,7 @@
             align-items: center;
             gap: 0.75rem;
             min-width: 0;
+            flex: 1 1 auto;
         }
 
         .topbar-brand-badge {
@@ -114,7 +116,7 @@
         }
 
         .desktop-nav {
-            display: flex;
+            display: none !important;
             align-items: center;
             gap: 0.55rem;
             flex-wrap: wrap;
@@ -176,7 +178,7 @@
         .toolbar-group {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: flex-start;
             gap: 0.65rem;
             flex-wrap: wrap;
             flex: 0 1 auto;
@@ -245,8 +247,9 @@
             width: 100%;
             display: flex;
             align-items: center;
-            gap: 0.85rem;
-            padding: 0.9rem 1rem;
+            justify-content: flex-start;
+            gap: 0;
+            padding: 0.95rem 1rem;
             border-radius: 1rem;
             border: 1px solid rgba(148,163,184,0.18);
             background: rgba(255,255,255,0.6);
@@ -257,20 +260,9 @@
             background: rgba(30,41,59,0.68);
         }
 
-        .drawer-link-index {
-            min-width: 2.1rem;
-            height: 2.1rem;
-            border-radius: 9999px;
-            background: rgba(37,99,235,0.12);
-            color: var(--accent-color);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.78rem;
-            font-weight: 900;
-        }
-
         .drawer-link-title {
+            display: block;
+            width: 100%;
             font-size: 0.98rem;
             font-weight: 800;
             line-height: 1.35;
@@ -488,33 +480,82 @@
 }
 
 
-/* ===== Full page-switch mode ===== */
+/* ===== Full page-switch mode with safe fallback ===== */
 .hero-section {
     display: none;
 }
 
 .content-section {
-    display: none;
-    opacity: 0;
-    transform: translateY(12px);
+    display: block;
+    opacity: 1;
+    transform: none;
     transition: opacity 0.35s ease, transform 0.35s ease;
     animation: none;
 }
 
-.content-section.active {
+.js-enabled .content-section {
+    display: none;
+    opacity: 0;
+    transform: translateY(12px);
+}
+
+.js-enabled .content-section.active {
     display: block;
     opacity: 1;
     transform: translateY(0);
 }
 
-.content-section.active .reveal,
-.content-section.active.reveal {
+.js-enabled .content-section.active .reveal,
+.js-enabled .content-section.active.reveal {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
 
 .section-page-wrap {
     min-height: calc(100vh - 120px);
+}
+
+@media (max-width: 1024px) {
+    .section-container {
+        margin-bottom: 4.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-page-wrap {
+        min-height: auto;
+    }
+    .section-container {
+        margin-bottom: 3.5rem;
+    }
+    .section-container .relative.z-10.pt-10 {
+        padding-top: 1.25rem;
+    }
+    .section-container h2.text-4xl {
+        font-size: 1.65rem !important;
+        line-height: 1.35;
+        margin-bottom: 1.5rem;
+    }
+    .section-container h3.text-2xl {
+        font-size: 1.2rem !important;
+        line-height: 1.4;
+    }
+    .section-container .grid.md\:grid-cols-2.gap-16,
+    .section-container .grid.md\:grid-cols-2.gap-10,
+    .section-container .grid.md\:grid-cols-3.gap-6,
+    .section-container .grid.md\:grid-cols-2.lg\:grid-cols-4.gap-6,
+    .section-container .grid.lg\:grid-cols-2.gap-8 {
+        gap: 1rem !important;
+    }
+    .section-container .p-8,
+    .section-container .p-10,
+    .section-container .p-12 {
+        padding: 1rem !important;
+    }
+    .section-container .text-2xl.font-black,
+    .section-container .text-2xl.font-bold {
+        font-size: 1.15rem !important;
+    }
 }
 
 /* ===== 回到頂部按鈕 ===== */
@@ -588,6 +629,366 @@
     }
 }
 
+
+
+/* ===== Extra dark mode contrast fix for iPhone ===== */
+.dark {
+    color-scheme: dark;
+}
+
+.dark .section-header {
+    color: rgba(226, 232, 240, 0.16) !important;
+}
+
+.dark .bg-slate-50,
+.dark .bg-slate-100,
+.dark .bg-slate-200,
+.dark .bg-blue-50,
+.dark .bg-blue-100,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .p-8.bg-slate-50,
+.dark .p-10.bg-slate-50,
+.dark .p-6.bg-slate-50,
+.dark .p-8.bg-blue-50,
+.dark .p-6.bg-blue-50 {
+    background-color: rgba(30, 41, 59, 0.88) !important;
+    color: #e5e7eb !important;
+    border-color: rgba(148, 163, 184, 0.22) !important;
+}
+
+.dark .bg-slate-50 *,
+.dark .bg-slate-100 *,
+.dark .bg-slate-200 *,
+.dark .bg-blue-50 *,
+.dark .bg-blue-100 *,
+.dark .bg-gray-50 *,
+.dark .bg-gray-100 * {
+    color: inherit !important;
+}
+
+.dark .bg-slate-50 .text-blue-600,
+.dark .bg-slate-100 .text-blue-600,
+.dark .bg-blue-50 .text-blue-600,
+.dark .bg-blue-100 .text-blue-600,
+.dark .text-blue-600 {
+    color: #7fb0ff !important;
+}
+
+.dark .bg-slate-50 .opacity-40,
+.dark .bg-slate-50 .opacity-50,
+.dark .bg-slate-50 .opacity-60,
+.dark .bg-slate-50 .opacity-70,
+.dark .bg-slate-100 .opacity-40,
+.dark .bg-slate-100 .opacity-50,
+.dark .bg-slate-100 .opacity-60,
+.dark .bg-slate-100 .opacity-70,
+.dark .bg-blue-50 .opacity-40,
+.dark .bg-blue-50 .opacity-50,
+.dark .bg-blue-50 .opacity-60,
+.dark .bg-blue-50 .opacity-70,
+.dark .bg-blue-100 .opacity-40,
+.dark .bg-blue-100 .opacity-50,
+.dark .bg-blue-100 .opacity-60,
+.dark .bg-blue-100 .opacity-70,
+.dark .bg-slate-800\/30 .opacity-40,
+.dark .bg-slate-800\/30 .opacity-50,
+.dark .bg-slate-800\/30 .opacity-60,
+.dark .bg-slate-800\/30 .opacity-70,
+.dark .bg-slate-800\/50 .opacity-40,
+.dark .bg-slate-800\/50 .opacity-50,
+.dark .bg-slate-800\/50 .opacity-60,
+.dark .bg-slate-800\/50 .opacity-70 {
+    opacity: 1 !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .bg-slate-800\/30,
+.dark .bg-slate-800\/50,
+.dark .dark\:bg-slate-800\/30,
+.dark .dark\:bg-slate-800\/50,
+.dark .dark\:bg-blue-900\/10,
+.dark .dark\:bg-blue-900\/20 {
+    color: #e5e7eb !important;
+    border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+.dark .dark\:bg-slate-800\/30 *,
+.dark .dark\:bg-slate-800\/50 *,
+.dark .dark\:bg-blue-900\/10 *,
+.dark .dark\:bg-blue-900\/20 * {
+    color: inherit;
+}
+
+.dark .toolbar-group button,
+.dark .toolbar-group button span,
+.dark .toolbar-group button i,
+.dark .menu-toggle-btn,
+.dark .drawer-close-btn,
+.dark #langDisplay,
+.dark #voiceText {
+    color: #e5e7eb !important;
+}
+
+.dark .toolbar-group button svg {
+    fill: currentColor !important;
+}
+
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-slate-300,
+.dark .dark\:border-slate-800 {
+    border-color: rgba(148, 163, 184, 0.22) !important;
+}
+
+.dark .section-container p,
+.dark .section-container li,
+.dark .section-container td,
+.dark .section-container th,
+.dark .section-container span,
+.dark .section-container h3,
+.dark .section-container h4,
+.dark .section-container h5 {
+    -webkit-text-fill-color: currentColor;
+}
+
+.dark .data-table th,
+.dark .product-table th {
+    color: #f8fafc !important;
+}
+
+.dark .data-table td,
+.dark .product-table td {
+    color: #e5e7eb !important;
+}
+
+@media (max-width: 768px) {
+    .dark .section-header {
+        color: rgba(226, 232, 240, 0.14) !important;
+    }
+}
+
+
+.toolbar-group-left {
+    flex: 0 0 auto;
+    margin-right: 0.85rem;
+}
+@media (max-width: 768px) {
+    .site-topbar {
+        padding: 0.75rem 0.8rem;
+    }
+    .toolbar-group {
+        gap: 0.35rem;
+    }
+    .topbar-brand {
+        min-width: 0;
+    }
+}
+
+
+
+/* ===== Stronger iPhone dark/light contrast patch ===== */
+html, body {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Improve Safari dark-mode inheritance on utility-heavy blocks */
+.dark .content-section,
+.dark .content-section .relative,
+.dark .content-section article,
+.dark .content-section div,
+.dark .content-section section {
+    border-color: rgba(148, 163, 184, 0.22);
+}
+
+/* Text utilities that were too light/faded on iPhone dark mode */
+.dark .text-slate-500,
+.dark .text-slate-400,
+.dark .text-slate-300,
+.dark .opacity-40,
+.dark .opacity-50,
+.dark .opacity-60,
+.dark .opacity-70,
+.dark .opacity-80 {
+    color: inherit;
+}
+
+.dark .content-section p.opacity-40,
+.dark .content-section p.opacity-50,
+.dark .content-section p.opacity-60,
+.dark .content-section p.opacity-70,
+.dark .content-section p.opacity-80,
+.dark .content-section span.opacity-40,
+.dark .content-section span.opacity-50,
+.dark .content-section span.opacity-60,
+.dark .content-section span.opacity-70,
+.dark .content-section span.opacity-80,
+.dark .content-section li.opacity-40,
+.dark .content-section li.opacity-50,
+.dark .content-section li.opacity-60,
+.dark .content-section li.opacity-70,
+.dark .content-section li.opacity-80 {
+    opacity: 0.96 !important;
+    color: #dbe4f0 !important;
+}
+
+.dark .content-section .text-xs.opacity-40,
+.dark .content-section .text-xs.opacity-50,
+.dark .content-section .text-xs.opacity-60,
+.dark .content-section .text-sm.opacity-40,
+.dark .content-section .text-sm.opacity-50,
+.dark .content-section .text-sm.opacity-60,
+.dark .content-section .text-sm.opacity-70,
+.dark .content-section .text-[10px].opacity-50,
+.dark .content-section .text-[10px].opacity-60,
+.dark .content-section .text-[11px].opacity-70 {
+    color: #cbd5e1 !important;
+    opacity: 1 !important;
+}
+
+/* Light cards switched to proper dark cards */
+.dark .bg-slate-50,
+.dark .bg-slate-100,
+.dark .bg-blue-50,
+.dark .bg-gray-100,
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-slate-300 {
+    background-color: #1e293b !important;
+    color: #e5e7eb !important;
+    border-color: rgba(148, 163, 184, 0.22) !important;
+}
+
+.dark .bg-slate-800,
+.dark .bg-slate-800\/30,
+.dark .bg-slate-800\/50,
+.dark .bg-blue-900\/10,
+.dark .bg-blue-900\/20 {
+    background-color: #1e293b !important;
+    color: #e5e7eb !important;
+}
+
+/* White translucent boxes inside blue highlight section */
+.dark .bg-white\/10,
+.dark .bg-white\/5 {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    color: #f8fafc !important;
+}
+
+.dark .bg-white\/10 p,
+.dark .bg-white\/10 span,
+.dark .bg-white\/5 p,
+.dark .bg-white\/5 span,
+.dark .highlight-card .opacity-40,
+.dark .highlight-card .opacity-60,
+.dark .highlight-card .opacity-80 {
+    color: rgba(248, 250, 252, 0.96) !important;
+    opacity: 1 !important;
+}
+
+/* Buttons in toolbar stay readable in both themes */
+.toolbar-group button,
+.toolbar-group button span,
+.toolbar-group button i,
+.toolbar-group button svg {
+    -webkit-text-fill-color: currentColor;
+}
+
+.dark #voiceBtn,
+.dark #voiceBtn span,
+.dark #langDisplay,
+.dark .toolbar-group button:not(.is-speaking) {
+    color: #e5e7eb !important;
+}
+
+.dark #voiceBtn {
+    background: #1e293b !important;
+    border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+/* Table readability */
+.dark .data-table,
+.dark .product-table {
+    background: #111827;
+}
+
+.dark .data-table th,
+.dark .product-table th {
+    background-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+.dark .data-table td,
+.dark .product-table td {
+    background-color: #111827 !important;
+    color: #e5e7eb !important;
+}
+
+/* Footer readability */
+.dark footer .text-slate-500,
+.dark footer .opacity-40 {
+    color: rgba(226, 232, 240, 0.78) !important;
+    opacity: 1 !important;
+}
+
+/* iPhone specific tuning */
+@supports (-webkit-touch-callout: none) {
+    .dark .content-section p,
+    .dark .content-section li,
+    .dark .content-section span,
+    .dark .content-section h2,
+    .dark .content-section h3,
+    .dark .content-section h4,
+    .dark .content-section h5,
+    .dark .content-section td,
+    .dark .content-section th,
+    .dark footer p,
+    .dark header span,
+    .dark header i {
+        -webkit-text-fill-color: currentColor !important;
+    }
+
+    .dark .content-section {
+        text-shadow: 0 0 0 transparent;
+    }
+}
+
+
+
+/* ===== Team members in footer ===== */
+.team-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.18);
+    color: rgba(226, 232, 240, 0.78);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-align: right;
+    word-break: break-word;
+}
+
+.dark .team-footer {
+    color: rgba(226, 232, 240, 0.82);
+    border-top-color: rgba(148, 163, 184, 0.18);
+}
+
+@media (max-width: 768px) {
+    .team-footer {
+        margin-top: 1rem;
+        padding-top: 0.85rem;
+        font-size: 0.72rem;
+        line-height: 1.75;
+        text-align: left;
+    }
+}
+
 </style>
 </head>
 <body class="light">
@@ -604,32 +1005,31 @@
 </div>
 <div class="drawer-links">
 <button class="drawer-link nav-link" type="button" onclick="switchSection('sec1')">
-<span class="drawer-link-index">壹</span>
 <span class="drawer-link-title" data-i18n="nav_sec1" data-i18n-mode="text">壹、最新消息</span>
 </button>
 <button class="drawer-link nav-link" type="button" onclick="switchSection('sec2')">
-<span class="drawer-link-index">貳</span>
 <span class="drawer-link-title" data-i18n="nav_sec2" data-i18n-mode="text">貳、發展沿革</span>
 </button>
 <button class="drawer-link nav-link" type="button" onclick="switchSection('sec3')">
-<span class="drawer-link-index">參</span>
 <span class="drawer-link-title" data-i18n="nav_sec3" data-i18n-mode="text">參、願景使命與價值</span>
 </button>
 <button class="drawer-link nav-link" type="button" onclick="switchSection('sec4')">
-<span class="drawer-link-index">肆</span>
 <span class="drawer-link-title" data-i18n="nav_sec4" data-i18n-mode="text">肆、組織架構</span>
 </button>
 <button class="drawer-link nav-link" type="button" onclick="switchSection('sec5')">
-<span class="drawer-link-index">伍</span>
 <span class="drawer-link-title" data-i18n="nav_sec5" data-i18n-mode="text">伍、產品組合與藍圖</span>
 </button>
 <button class="drawer-link nav-link" type="button" onclick="switchSection('sec6')">
-<span class="drawer-link-index">陸</span>
 <span class="drawer-link-title" data-i18n="nav_sec6" data-i18n-mode="text">陸、財務績效</span>
 </button>
 </div>
 </aside>
 <header class="site-topbar">
+<div class="toolbar-group toolbar-group-left">
+<button class="menu-toggle-btn" type="button" onclick="toggleMenu()" aria-label="Open menu">
+<i class="fas fa-bars"></i>
+</button>
+</div>
 <div class="topbar-brand">
 <div class="topbar-brand-badge">FC</div>
 <div class="topbar-brand-text">
@@ -637,18 +1037,7 @@
 <div class="topbar-subtitle">FORMOSA CHEMICALS &amp; FIBRE CORP.</div>
 </div>
 </div>
-<nav class="desktop-nav" aria-label="Desktop navigation">
-<button class="nav-link" type="button" onclick="switchSection('sec1')">壹</button>
-<button class="nav-link" type="button" onclick="switchSection('sec2')">貳</button>
-<button class="nav-link" type="button" onclick="switchSection('sec3')">參</button>
-<button class="nav-link" type="button" onclick="switchSection('sec4')">肆</button>
-<button class="nav-link" type="button" onclick="switchSection('sec5')">伍</button>
-<button class="nav-link" type="button" onclick="switchSection('sec6')">陸</button>
-</nav>
 <div class="toolbar-group">
-<button class="menu-toggle-btn" type="button" onclick="toggleMenu()" aria-label="Open menu">
-<i class="fas fa-bars"></i>
-</button>
 <button class="flex items-center justify-center gap-2 px-4 h-10 rounded-full bg-white border border-slate-200 text-slate-800 font-bold text-xs shadow-md hover:bg-slate-50 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700" id="voiceBtn" onclick="toggleAudioGuide()">
 <i class="fas fa-volume-up text-blue-500 dark:text-blue-400" id="voiceIcon"></i>
 <span data-en="Audio Guide OFF" data-i18n="k0" data-i18n-mode="text" data-zh="語音導覽 OFF" id="voiceText">語音導覽 OFF</span>
@@ -663,7 +1052,7 @@
 </div>
 </header>
 <!-- 主內容區 (第壹至陸章節完全保留原貌) -->
-<main class="content-main min-h-screen pt-[96px] md:pt-[104px]">
+<main class="content-main min-h-screen pt-[92px] sm:pt-[96px] md:pt-[104px]">
 <!-- Hero Section -->
 <section class="hero-section h-screen flex flex-col justify-center px-10 md:px-24">
 <h1 class="text-4xl md:text-[5rem] font-black tracking-tighter leading-none mb-4 opacity-30 uppercase" data-i18n="k2" data-i18n-mode="text">
@@ -861,7 +1250,7 @@
 </div>
 <div class="grid md:grid-cols-2 gap-10">
 <div class="p-10 border border-slate-100 dark:border-slate-800 rounded-3xl space-y-6">
-<h4 class="text-xl font-black flex items-center gap-2"><i class="fas fa-bullseye text-blue-500"></i> 企業願景 (The Vision)</h4>
+<h4 class="text-xl font-black flex items-center gap-2"><i class="fas fa-bullseye text-blue-500"></i> <span data-i18n="vision_title" data-i18n-mode="text">企業願景</span></h4>
 <p class="text-sm opacity-70 leading-loose" data-i18n="k60" data-i18n-mode="text">追求永續發展，強化全球競爭力，維持在石化、塑膠與化學纖維產業的領導地位。</p>
 <ul class="space-y-4 text-xs opacity-60">
 <li class="flex items-start gap-2"><span class="w-1 h-1 rounded-full bg-blue-500 mt-1.5 shrink-0"></span><span data-i18n="k61" data-i18n-mode="text">透過垂直整合生產模式，確保供應穩定與價格競爭力。</span></li>
@@ -869,7 +1258,7 @@
 </ul>
 </div>
 <div class="p-10 bg-slate-50 dark:bg-slate-800/30 rounded-3xl space-y-6">
-<h4 class="text-xl font-black flex items-center gap-2"><i class="fas fa-cogs text-blue-500"></i> 管理特色 (Management Style)</h4>
+<h4 class="text-xl font-black flex items-center gap-2"><i class="fas fa-cogs text-blue-500"></i> <span data-i18n="management_title" data-i18n-mode="text">管理特色</span></h4>
 <div class="space-y-4">
 <div><p class="text-sm font-bold" data-i18n="k63" data-i18n-mode="text">合理化管理 (Rational Management)</p><p class="text-xs opacity-60" data-i18n="k64" data-i18n-mode="text">強調數字管理，凡事講求實據。透過壓力管理持續精進流程。</p></div>
 <div><p class="text-sm font-bold" data-i18n="k65" data-i18n-mode="text">個人電腦化 (Individual Computerization)</p><p class="text-xs opacity-60" data-i18n="k66" data-i18n-mode="text">全面推動資訊透明與流程自動化，確保決策的及時性與精準度。</p></div>
@@ -967,34 +1356,34 @@
 <h2 class="text-4xl font-black mb-10 border-b-4 border-current pb-4 inline-block" data-i18n="k111" data-i18n-mode="text">伍、產品組合與藍圖 (Product Portfolios &amp; Roadmap)</h2>
 <h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="k112" data-i18n-mode="text">一、依產品類別 (Product Lines)</h3>
 <div class="mb-10 overflow-x-auto">
-<h4 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-cube text-blue-500"></i> 1. 塑膠原料 (Plastics)</h4>
+<h4 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-cube text-blue-500"></i><span data-i18n="k190" data-i18n-mode="text">1. 塑膠原料</span></h4>
 <table class="product-table">
 <thead><tr><th data-i18n="k113" data-i18n-mode="text" width="20%">主產品</th><th data-i18n="k114" data-i18n-mode="text" width="80%">細項分類與規格</th></tr></thead>
 <tbody>
 <tr><td data-i18n="k115" data-i18n-mode="text">ABS 樹脂</td><td data-i18n="k116" data-i18n-mode="text">台灣/寧波生產基地主要產項。</td></tr>
 <tr><td data-i18n="k117" data-i18n-mode="text">PS 樹脂</td><td data-i18n="k118" data-i18n-mode="text">台灣/寧波生產基地主要產項。</td></tr>
 <tr><td data-i18n="k119" data-i18n-mode="text">PP 樹脂</td><td>
-<div class="mb-2"><b data-i18n="k120" data-i18n-mode="text">● 單聚物 PP：</b>押出吹製級、雙軸延伸、薄膜級、扁紗級、射出級、纖維級、吹膜級</div>
-<div class="mb-2"><b data-i18n="k121" data-i18n-mode="text">● 隨意共聚合物 PP：</b>押出吹製級、薄膜級、射出級</div>
-<div><b data-i18n="k122" data-i18n-mode="text">● 耐衝擊共聚合物 PP：</b>押出級、射出級</div>
+<div class="mb-2"><b data-i18n="k120" data-i18n-mode="text">● 單聚物 PP：</b><span data-i18n="k191" data-i18n-mode="text">押出吹製級、雙軸延伸、薄膜級、扁紗級、射出級、纖維級、吹膜級</span></div>
+<div class="mb-2"><b data-i18n="k121" data-i18n-mode="text">● 隨意共聚合物 PP：</b><span data-i18n="k192" data-i18n-mode="text">押出吹製級、薄膜級、射出級</span></div>
+<div><b data-i18n="k122" data-i18n-mode="text">● 耐衝擊共聚合物 PP：</b><span data-i18n="k193" data-i18n-mode="text">押出級、射出級</span></div>
 </td></tr>
 <tr><td data-i18n="k123" data-i18n-mode="text">PC 樹脂</td><td>
-<div class="mb-2"><b data-i18n="k124" data-i18n-mode="text">● 台化 PC 改性產品：</b>耐候級、耐燃級、透明阻燃、擴散級、超低溫耐衝級、高透光級、紅外線穿透</div>
-<div><b data-i18n="k125" data-i18n-mode="text">● 台化出光 PC 產品：</b>基礎型 PC (通用、耐候、光學、導光、潔淨/薄膜級)</div>
+<div class="mb-2"><b data-i18n="k124" data-i18n-mode="text">● 台化 PC 改性產品：</b><span data-i18n="k194" data-i18n-mode="text">耐候級、耐燃級、透明阻燃、擴散級、超低溫耐衝級、高透光級、紅外線穿透</span></div>
+<div><b data-i18n="k125" data-i18n-mode="text">● 台化出光 PC 產品：</b><span data-i18n="k195" data-i18n-mode="text">基礎型 PC（通用、耐候、光學、導光、潔淨／薄膜級）</span></div>
 </td></tr>
 <tr><td data-i18n="k126" data-i18n-mode="text">PC 合金 (合膠)</td><td data-i18n="k127" data-i18n-mode="text">一般級、耐燃級</td></tr>
 <tr><td data-i18n="k128" data-i18n-mode="text">SAN / ASA 樹脂</td><td data-i18n="k129" data-i18n-mode="text">SAN (一般級、特殊級)；ASA 樹脂</td></tr>
 <tr><td data-i18n="k130" data-i18n-mode="text">複合材料</td><td data-i18n="k131" data-i18n-mode="text">PC/ABS 合金 (一般級)、PP 複合材料、Nylon 樹脂 (越南)</td></tr>
 <tr><td data-i18n="k132" data-i18n-mode="text">永續材料 (PCR)</td><td>
 <span class="category-tag">PCR ABS</span><span class="category-tag">PCR PS</span><span class="category-tag">PCR PC</span>
-<span class="category-tag">PCR PC合金</span><span class="category-tag">PCR PP</span><span class="category-tag" data-i18n="k133" data-i18n-mode="text">化學回收樹脂</span>
+<span class="category-tag" data-i18n="k196" data-i18n-mode="text">PCR PC合金</span><span class="category-tag">PCR PP</span><span class="category-tag" data-i18n="k133" data-i18n-mode="text">化學回收樹脂</span>
 <span class="category-tag" data-i18n="k134" data-i18n-mode="text">生質樹脂</span>
 </td></tr>
 </tbody>
 </table>
 </div>
 <div class="mb-10 overflow-x-auto">
-<h4 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-flask text-blue-500"></i> 2. 石油化學 (Petrochemicals)</h4>
+<h4 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-flask text-blue-500"></i><span data-i18n="k197" data-i18n-mode="text">2. 石油化學</span></h4>
 <table class="product-table">
 <thead><tr><th data-i18n="k135" data-i18n-mode="text" width="20%">生產部門</th><th data-i18n="k136" data-i18n-mode="text" width="80%">主要化學產品細項</th></tr></thead>
 <tbody>
@@ -1006,22 +1395,22 @@
 </table>
 </div>
 <div class="mb-16 overflow-x-auto">
-<h4 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-tshirt text-blue-500"></i> 3. 纖維與紡織 (Fibers &amp; Textiles)</h4>
+<h4 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-tshirt text-blue-500"></i><span data-i18n="k198" data-i18n-mode="text">3. 纖維與紡織</span></h4>
 <table class="product-table">
 <thead><tr><th data-i18n="k145" data-i18n-mode="text" width="20%">類別</th><th data-i18n="k146" data-i18n-mode="text" width="80%">產品說明</th></tr></thead>
 <tbody>
 <tr><td data-i18n="k147" data-i18n-mode="text">人造纖維</td><td data-i18n="k148" data-i18n-mode="text">嫘縈棉 (Rayon)、聚酯纖維 (Polyester)、尼龍纖維 (Nylon)</td></tr>
 <tr><td data-i18n="k149" data-i18n-mode="text">紡織產品</td><td data-i18n="k150" data-i18n-mode="text">各類棉、混紡紗、交織布</td></tr>
-<tr><td data-i18n="k151" data-i18n-mode="text">環保特種纖維</td><td><b data-i18n="k152" data-i18n-mode="text">Seawastex (海洋回收尼龍)：</b>回收廢棄漁網。<br/><b data-i18n="k153" data-i18n-mode="text">循環再生紗：</b>廢布/舊衣回收再製。</td></tr>
+<tr><td data-i18n="k151" data-i18n-mode="text">環保特種纖維</td><td><b data-i18n="k152" data-i18n-mode="text">Seawastex (海洋回收尼龍)：</b><span data-i18n="k199" data-i18n-mode="text">回收廢棄漁網。</span><br/><b data-i18n="k153" data-i18n-mode="text">循環再生紗：</b><span data-i18n="k200" data-i18n-mode="text">廢布/舊衣回收再製。</span></td></tr>
 </tbody>
 </table>
 </div>
 <h3 class="text-2xl font-black mb-10 text-blue-600" data-i18n="k154" data-i18n-mode="text">二、產品藍圖與未來策略 (Product Roadmap)</h3>
 <div class="grid lg:grid-cols-2 gap-8 mb-10">
 <div class="bg-slate-900 text-white p-8 rounded-3xl">
-<h4 class="text-xl font-black mb-6" data-i18n="k155" data-i18n-mode="text">高成長目標市場 (Target Markets)</h4>
+<h4 class="text-xl font-black mb-6" data-i18n="k155" data-i18n-mode="text">高成長目標市場</h4>
 <div class="space-y-6">
-<div class="flex gap-4"><div class="w-12 h-12 bg-blue-500 flex items-center justify-center rounded-full shrink-0">1</div><div><p class="font-bold" data-i18n="k156" data-i18n-mode="text">儲能電池組件 (BBU)</p><p class="text-xs opacity-60" data-i18n="k157" data-i18n-mode="text">開發專用塑膠外殼，較鋁合金減重 50%。</p></div></div>
+<div class="flex gap-4"><div class="w-12 h-12 bg-blue-500 flex items-center justify-center rounded-full shrink-0">1</div><div><p class="font-bold" data-i18n="k156" data-i18n-mode="text">儲能電池組件</p><p class="text-xs opacity-60" data-i18n="k157" data-i18n-mode="text">開發專用塑膠外殼，較鋁合金減重 50%。</p></div></div>
 <div class="flex gap-4"><div class="w-12 h-12 bg-blue-500 flex items-center justify-center rounded-full shrink-0">2</div><div><p class="font-bold" data-i18n="k158" data-i18n-mode="text">半導體材料</p><p class="text-xs opacity-60" data-i18n="k159" data-i18n-mode="text">開發電子級化學品與半導體封裝材料。</p></div></div>
 <div class="flex gap-4"><div class="w-12 h-12 bg-blue-500 flex items-center justify-center rounded-full shrink-0">3</div><div><p class="font-bold" data-i18n="k160" data-i18n-mode="text">醫療與車用</p><p class="text-xs opacity-60" data-i18n="k161" data-i18n-mode="text">提升高品質 ABS/PS/PP 於醫療設備與汽車輕量化之應用。</p></div></div>
 </div>
@@ -1053,7 +1442,7 @@
 <h2 class="text-4xl font-black mb-10 border-b-4 border-current pb-4 inline-block" data-i18n="k172" data-i18n-mode="text">陸、財務績效 (Financial Performance)</h2>
 <div class="mb-12">
 <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
-<i class="fas fa-chart-line text-blue-500"></i> 1. 主要財務指標 (Key Financial Indicators)
+<i class="fas fa-chart-line text-blue-500"></i> <span data-i18n="financial_key_indicators" data-i18n-mode="text">1. 主要財務指標</span>
                         </h3>
 <div class="overflow-x-auto">
 <table class="data-table">
@@ -1110,11 +1499,11 @@
 <ul class="space-y-4 text-sm opacity-80">
 <li class="flex items-start gap-2">
 <i class="fas fa-check-circle text-green-500 mt-1"></i>
-<span><b data-i18n="k179" data-i18n-mode="text">毛利率 (Gross Margin)：</b>2021 年高達 18.5%，隨後受原油成本與中國產能過剩影響，2022-2023 年降至 5% 以下。</span>
+<span><b data-i18n="k179" data-i18n-mode="text">毛利率 (Gross Margin)：</b><span data-i18n="k179_desc" data-i18n-mode="text">2021 年高達 18.5%，隨後受原油成本與中國產能過剩影響，2022-2023 年降至 5% 以下。</span></span>
 </li>
 <li class="flex items-start gap-2">
 <i class="fas fa-check-circle text-green-500 mt-1"></i>
-<span><b data-i18n="k180" data-i18n-mode="text">營運轉機：</b>預計 2024-2025 年隨著產品組合轉向非大宗商品 (Non-commodity)，利潤率將逐步回升。</span>
+<span><b data-i18n="k180" data-i18n-mode="text">營運轉機：</b><span data-i18n="k180_desc" data-i18n-mode="text">預計 2024-2025 年隨著產品組合轉向非大宗商品 (Non-commodity)，利潤率將逐步回升。</span></span>
 </li>
 </ul>
 </div>
@@ -1123,11 +1512,11 @@
 <ul class="space-y-4 text-sm opacity-80">
 <li class="flex items-start gap-2">
 <i class="fas fa-shield-alt text-blue-500 mt-1"></i>
-<span><b data-i18n="k182" data-i18n-mode="text">債務管理：</b>負債比率維持在 30%-35% 之間，遠優於行業健康標準，展現強大抗風險能力。</span>
+<span><b data-i18n="k182" data-i18n-mode="text">債務管理：</b><span data-i18n="k182_desc" data-i18n-mode="text">負債比率維持在 30%-35% 之間，遠優於行業健康標準，展現強大抗風險能力。</span></span>
 </li>
 <li class="flex items-start gap-2">
 <i class="fas fa-coins text-yellow-500 mt-1"></i>
-<span><b data-i18n="k183" data-i18n-mode="text">現金流：</b>2022-2023 景氣谷底期間，嚴格控管資本支出 (CapEx)，確保營運現金流足以支付債務。</span>
+<span><b data-i18n="k183" data-i18n-mode="text">現金流：</b><span data-i18n="k183_desc" data-i18n-mode="text">2022-2023 景氣谷底期間，嚴格控管資本支出 (CapEx)，確保營運現金流足以支付債務。</span></span>
 </li>
 </ul>
 </div>
@@ -1174,7 +1563,7 @@
 </div>
 </main>
 <!-- 頁尾 -->
-<footer class="bg-slate-900 text-white pt-24 pb-12 px-10 md:px-24">
+<footer class="bg-slate-900 text-white pt-16 md:pt-24 pb-10 md:pb-12 px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24">
 <div class="flex flex-col md:flex-row justify-between items-start mb-20 gap-10">
 <div>
 <h2 class="text-4xl font-black tracking-tighter mb-4">FCFC.</h2>
@@ -1185,9 +1574,15 @@
 <p class="text-xs opacity-40" data-i18n="k189" data-i18n-mode="text">For education use only.</p>
 </div>
 </div>
+<div class="team-footer" data-i18n="team_members" data-i18n-mode="text">組員:羅于欣、賈安琪、蔡帷杉、張萓庭、張宜芊、林彥妤</div>
 </footer>
+
 <script>
 const translations = {
+    "team_members": {
+        "zh": "組員:羅于欣、賈安琪、蔡帷杉、張萓庭、張宜芊、林彥妤",
+        "en": "Group member: Kimberly Luo, Angel Jia, Ann Tsai, Tina Chang, Elaine Chang, Winnie Lin"
+    },
     "k0": {
         "zh": "語音導覽 OFF",
         "en": "Audio Guide OFF"
@@ -1924,6 +2319,22 @@ const translations = {
         "zh": "現金流：",
         "en": "Cash Flow:"
     },
+    "k179_desc": {
+        "zh": "2021 年高達 18.5%，隨後受原油成本與中國產能過剩影響，2022-2023 年降至 5% 以下。",
+        "en": "Reached 18.5% in 2021, then fell below 5% in 2022–2023 due to crude oil costs and excess capacity in China."
+    },
+    "k180_desc": {
+        "zh": "預計 2024-2025 年隨著產品組合轉向非大宗商品 (Non-commodity)，利潤率將逐步回升。",
+        "en": "Margins are expected to gradually recover in 2024–2025 as the product mix shifts toward non-commodity products."
+    },
+    "k182_desc": {
+        "zh": "負債比率維持在 30%-35% 之間，遠優於行業健康標準，展現強大抗風險能力。",
+        "en": "The debt ratio remains around 30%–35%, well healthier than industry norms, demonstrating strong resilience against risk."
+    },
+    "k183_desc": {
+        "zh": "2022-2023 景氣谷底期間，嚴格控管資本支出 (CapEx)，確保營運現金流足以支付債務。",
+        "en": "During the 2022–2023 downturn, capital expenditures (CapEx) were tightly controlled to ensure operating cash flow was sufficient to cover debt obligations."
+    },
     "k184": {
         "zh": "4. 股價走勢分析",
         "en": "4. Stock Price Trend"
@@ -1988,6 +2399,18 @@ const translations = {
         "zh": "台化 TP 研究報告 | 台灣化學纖維股份有限公司",
         "en": "FCFC TP Research Report | Formosa Chemicals & Fibre Corporation"
     },
+    "vision_title": {
+        "zh": "企業願景",
+        "en": "The Vision"
+    },
+    "management_title": {
+        "zh": "管理特色",
+        "en": "Management Style"
+    },
+    "financial_key_indicators": {
+        "zh": "1. 主要財務指標",
+        "en": "1. Key Financial Indicators"
+    },
     "hero_title": {
         "zh": "台灣化學纖維<br>股份有限公司",
         "en": "FORMOSA <br> CHEMICALS &amp; <br> FIBRE CORP."
@@ -2003,7 +2426,52 @@ const translations = {
     "news2_source": {
         "zh": "來源：<a href=\"https://www.cmoney.tw/notes/note-detail.aspx?nid=1156980&utm_source\" target=\"_blank\" class=\"hover:text-blue-500 underline\">CMoney</a>｜標題：[法人調升] 台化預估恢復獲利，評等升至「買進」",
         "en": "Source: <a href=\"https://www.cmoney.tw/notes/note-detail.aspx?nid=1156980&utm_source\" target=\"_blank\" class=\"hover:text-blue-500 underline\">CMoney</a> | Headline: [Analyst Upgrade] FCFC Forecasts Return to Profitability; Rating Raised to \"Buy\""
+    }    ,
+    "k190": {
+        "zh": "1. 塑膠原料",
+        "en": "1. Plastics"
+    },
+    "k191": {
+        "zh": "押出吹製級、雙軸延伸、薄膜級、扁紗級、射出級、纖維級、吹膜級",
+        "en": "Blow molding grade, biaxially oriented grade, film grade, raffia grade, injection grade, fiber grade, and blown film grade"
+    },
+    "k192": {
+        "zh": "押出吹製級、薄膜級、射出級",
+        "en": "Blow molding grade, film grade, and injection grade"
+    },
+    "k193": {
+        "zh": "押出級、射出級",
+        "en": "Extrusion grade and injection grade"
+    },
+    "k194": {
+        "zh": "耐候級、耐燃級、透明阻燃、擴散級、超低溫耐衝級、高透光級、紅外線穿透",
+        "en": "Weather-resistant grade, flame-retardant grade, transparent flame-retardant grade, diffusion grade, ultra-low-temperature impact-resistant grade, high-transmittance grade, and infrared-transmitting grade"
+    },
+    "k195": {
+        "zh": "基礎型 PC（通用、耐候、光學、導光、潔淨／薄膜級）",
+        "en": "Base PC products (general-purpose, weather-resistant, optical, light-guide, clean-room/film grade)"
+    },
+    "k196": {
+        "zh": "PCR PC合金",
+        "en": "PCR PC Alloy"
+    },
+    "k197": {
+        "zh": "2. 石油化學",
+        "en": "2. Petrochemicals"
+    },
+    "k198": {
+        "zh": "3. 纖維與紡織",
+        "en": "3. Fibers & Textiles"
+    },
+    "k199": {
+        "zh": "回收廢棄漁網。",
+        "en": "Made from recycled discarded fishing nets."
+    },
+    "k200": {
+        "zh": "廢布/舊衣回收再製。",
+        "en": "Remanufactured from recycled fabric waste and used clothing."
     }
+
 };
 
 function toggleTheme() {
@@ -2130,19 +2598,21 @@ function closeMenu() {
 }
 
 const observerOptions = { threshold: 0.1 };
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100', 'translate-y-0');
-            entry.target.classList.remove('opacity-0', 'translate-y-10');
-        }
-    });
-}, observerOptions);
+if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+                entry.target.classList.remove('opacity-0', 'translate-y-10');
+            }
+        });
+    }, observerOptions);
 
-document.querySelectorAll('.reveal').forEach(el => {
-    el.classList.add('transition', 'duration-1000', 'opacity-0', 'translate-y-10');
-    observer.observe(el);
-});
+    document.querySelectorAll('.reveal').forEach(el => {
+        el.classList.add('transition', 'duration-1000', 'opacity-0', 'translate-y-10');
+        observer.observe(el);
+    });
+}
 
 function switchSection(sectionId, updateHash = true) {
     const sections = document.querySelectorAll('.content-section');
@@ -2168,7 +2638,7 @@ function switchSection(sectionId, updateHash = true) {
     }
 
     closeMenu();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
     applyLanguage(currentLang);
 }
 
